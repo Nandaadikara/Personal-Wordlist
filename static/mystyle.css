@@ -94,3 +94,30 @@ tr.highlight > td {
 tr.highlight a.highlight-link {
     color: white;
 }
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
+
+.but-def {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.e-baner {
+  margin-top: -25px;
+  margin-bottom: -70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+.e-baner img {
+  max-width: 90%;
+  max-height: 90%;
+}

@@ -36,8 +36,9 @@ def main():
             'word': word['word'],
             'definition': definition,
         })
-    msg = request.args.get('msg')
-    return render_template('index.html',words=words, msg=msg)
+    # msg = request.args.get('msg')
+    # return render_template('index.html',words=words, msg=msg)
+    return render_template('index.html',words=words)
     
 
 @app.route('/detail/<keyword>')
@@ -47,25 +48,32 @@ def detail(keyword):
     response = requests.get(url)
     definitions = response.json()
     
+    # if not definitions:
+    #     return redirect(url_for(
+    #         'main',
+    #         msg=f'Could not find {keyword}'
+    #     ))
+    
+    # if type(definitions[0]) is str:
+    #     suggestions = ','.join(definitions)
+    #     return redirect(url_for(
+    #         'main',
+    #         msg=f'Could not find the word,"{keyword}", did you mean {suggestions}'
+    #     ))
+      
     if not definitions:
-        return redirect(url_for(
-            'main',
-            msg=f'Could not find {keyword}'
-        ))
+        return render_template('eror.html',word=keyword)
     
     if type(definitions[0]) is str:
-        suggestions = ','.join(definitions)
-        return redirect(url_for(
-            'main',
-            msg=f'Could not find the word,"{keyword}", did you mean {suggestions}'
-        ))
-        
-    status = request.args.get('status_give', 'new')
+        return render_template('eror.html', word=keyword, definitions=definitions)
+      
+    # status = request.args.get('status_give', 'new')
     return render_template(
         'detail.html',
         word=keyword,
         definitions=definitions,
-        status=status
+        # status=status
+        status=request.args.get('status_give','new')
     )
    
 @app.route('/api/save_word', methods=['POST'])
